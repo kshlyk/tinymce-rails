@@ -47473,6 +47473,8 @@ define(
 
           self.fire('SetContent', args);
         } else {
+          content = content.replace(/{%/g,"<!--{%").replace(/%}/g,"%}-->");
+
           // Parse and serialize the html
           if (args.format !== 'raw') {
             content = new Serializer({
@@ -47551,6 +47553,8 @@ define(
         } else {
           args.content = content;
         }
+
+        args.content = args.content.replace(/<!--{%/g,"{%").replace(/%}-->/g,"%}");
 
         // Do post processing
         if (!args.no_events) {
